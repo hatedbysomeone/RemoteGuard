@@ -44,12 +44,19 @@ All fields are optional. Unset fields fall back to the defaults in `Constants.lu
 | `name` | `string` | remote.Name | Name used in logs |
 
 | `cooldown` | `number` | `0` | Minimum seconds between **valid** calls. Bad calls (wrong type, missing arg) do **not** reset the cooldown timer. |
+
 | `perSecLimit` | `number` | `10` | Max calls per second (any validity). Exceeding this triggers an immediate ban. |
+
 | `rateLimit` | `number` | `10` | Max **valid** calls within `rateWindow` seconds before ban. |
+
 | `rateWindow` | `number` | `5` | Window in seconds for `rateLimit`. |
+
 | `banDuration` | `number` | `30` | Seconds a player is banned after exceeding `perSecLimit` or `rateLimit`. |
+
 | `timeout` | `number` | `10` | `wrapFunction` only - seconds before the invoke is cancelled and `nil` is returned. |
+
 | `permission` | `function` | `nil` | `function(player): boolean` - return `false` to deny access. |
+
 | `args` | `table` | `nil` | Ordered list of argument schemas (see [Argument Schemas](#argument-schemas)). |
 
 ## Argument Schemas
@@ -200,11 +207,17 @@ Every call runs through these checks **in order**. The first failure rejects the
 ## Log Output
 
 | Level | Trigger | Output |
+
 | `INFO` | Remote auto-created | `[RemoteGuard][INFO] <Name> [server] RemoteEvent not found - created in ReplicatedStorage` |
+
 | `WARN` | Cooldown / bad type / missing arg | `[RemoteGuard][WARN] <SendMessage> [Player1] Cooldown active. 1.4s remaining.` |
+
 | `DENIED` | Permission returned false | `[RemoteGuard][DENIED] <AdminKick> [Player1] Permission denied.` |
+
 | `SPAM` | Flood or rate-limit exceeded | `[RemoteGuard][SPAM] <SendMessage> [Player1] FLOOD DETECTED - 14 calls/sec (limit 10). Banned for 30s!` |
+
 | `BLOCKED` | Call while banned | `[RemoteGuard][BLOCKED] <SendMessage> [Player1] Player is banned. 28s remaining. Stop spamming!` |
+
 | `ERROR` | Handler threw / permission threw | `[RemoteGuard][ERROR] <GetData> [Player1] Handler error: attempt to index nil` |
 
 `SPAM`, `BLOCKED`, and `ERROR` use `warn()`. Everything else uses `print()`.
@@ -230,4 +243,5 @@ Validator.validate(config, player, args)
 ## Dependencies
 
 - [evaera/roblox-lua-promise](https://eryn.io/roblox-lua-promise/) - place the ModuleScript at `ReplicatedStorage.Packages.Promise`
+
 
