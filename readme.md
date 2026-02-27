@@ -40,7 +40,9 @@ If `"SendMessage"` doesn't exist in `ReplicatedStorage`, RemoteGuard creates it 
 All fields are optional. Unset fields fall back to the defaults in `Constants.lua`.
 
 | Field | Type | Default | Description |
+
 | `name` | `string` | remote.Name | Name used in logs |
+
 | `cooldown` | `number` | `0` | Minimum seconds between **valid** calls. Bad calls (wrong type, missing arg) do **not** reset the cooldown timer. |
 | `perSecLimit` | `number` | `10` | Max calls per second (any validity). Exceeding this triggers an immediate ban. |
 | `rateLimit` | `number` | `10` | Max **valid** calls within `rateWindow` seconds before ban. |
@@ -228,3 +230,4 @@ Validator.validate(config, player, args)
 ## Dependencies
 
 - [evaera/roblox-lua-promise](https://eryn.io/roblox-lua-promise/) - place the ModuleScript at `ReplicatedStorage.Packages.Promise`
+
